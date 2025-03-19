@@ -20,39 +20,24 @@ jobs:
         with:
           node-version: 18
 
-      - name: List directory contents
+      - name: List directory contents (pre-install)
         run: ls -la
       
       - name: Install dependencies
-        run: npm install --save-dev jest supertest express jsonwebtoken body-parser
+        run: npm install
 
-      - name: Create Jest config
+      - name: List directory contents (post-install)
+        run: ls -la
+        
+      - name: Check if test file exists
         run: |
-          echo "module.exports = {
-            testEnvironment: 'node',
-            verbose: true,
-            forceExit: true,
-            testTimeout: 30000,
-          };" > jest.config.js
-
-      - name: Create missing package.json if needed
-        run: |
-          if [ ! -f package.json ]; then
-            echo '{
-              "name": "booklendsystem",
-              "version": "1.0.0",
-              "description": "Book Lending System",
-              "main": "file.js",
-              "scripts": {
-                "test": "jest --forceExit --detectOpenHandles"
-              }
-            }' > package.json
+          if [ -f file.test.js ]; then
+            echo "Test file exists"
+            cat file.test.js
+          else
+            echo "Test file does not exist"
+            ls -la
           fi
-
-      - name: Print file contents for debugging
-        run: |
-          echo "Contents of file.test.js:"
-          cat file.test.js
-
-      - name: Run tests directly with Jest
-        run: npx jest file.test.js --forceExit --detectOpenHandles --no-cache
+          
+      - name: Run tests
+        run: npm test
