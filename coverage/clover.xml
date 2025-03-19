@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1742361161419" clover="3.2.0">
-  <project timestamp="1742361161419" name="All files">
+<coverage generated="1742361426859" clover="3.2.0">
+  <project timestamp="1742361426859" name="All files">
     <metrics statements="44" coveredstatements="40" conditionals="18" coveredconditionals="10" methods="11" coveredmethods="6" elements="73" coveredelements="56" complexity="0" loc="44" ncloc="44" packages="1" files="1" classes="1"/>
     <file name="file.js" path="C:\Users\Ibbi\Desktop\coding\scd lab\lab08\booklendsystem\file.js">
       <metrics statements="44" coveredstatements="40" conditionals="18" coveredconditionals="10" methods="11" coveredmethods="6"/>
