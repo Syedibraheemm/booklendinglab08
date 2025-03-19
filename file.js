@@ -31,12 +31,16 @@ app.post('/login', (req, res) => {
 });
 
 const authenticate = (req, res, next) => {
-    const token = req.header('Authorization');
-    if (!token) return res.status(401).json({ message: 'Access Denied' });
+    const authHeader = req.header('Authorization');
+    if (!authHeader) return res.status(401).json({ message: 'Access Denied' });
+    
+    // Extract the token from Bearer format
+    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
+    
     try {
         req.user = jwt.verify(token, SECRET_KEY);
         next();
-    } catch {
+    } catch (error) {
         res.status(400).json({ message: 'Invalid Token' });
     }
 };
@@ -58,7 +62,9 @@ app.get('/books', authenticate, (req, res) => {
     res.json(filteredBooks);
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Only start the server if the file is run directly
+if (require.main === module) {
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
-// Automated Tests (Jest)
 module.exports = app;

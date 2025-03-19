@@ -20,8 +20,28 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Jest and dependencies
+        run: npm install --save-dev jest supertest express jsonwebtoken body-parser
+  
+      - name: Create package.json if it doesn't exist
+        run: |
+          if [ ! -f package.json ]; then
+            echo '{
+              "name": "booklendsystem",
+              "version": "1.0.0",
+              "description": "Book Lending System",
+              "main": "file.js",
+              "scripts": {
+                "test": "jest --forceExit"
+              }
+            }' > package.json
+          else
+            # Update existing package.json to include --forceExit
+            npx json -I -f package.json -e "this.scripts.test='jest --forceExit'"
+          fi
+
+      - name: Debug Directory Contents
+        run: ls -la
 
       - name: Run tests
         run: npm test
